@@ -13,7 +13,6 @@ initContainers:
       - name: theme
         mountPath: /theme
 
-
 auth:
   adminUser: admin
   adminPassword: admin
