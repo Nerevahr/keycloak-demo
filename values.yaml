@@ -8,7 +8,7 @@ initContainers:
       - -c
       - |
         echo "Copying theme..."
-        cp -R /mytheme/* /theme
+        cp -R /vanex/* /theme
     volumeMounts:
       - name: theme
         mountPath: /theme

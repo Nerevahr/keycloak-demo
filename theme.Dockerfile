@@ -1,2 +1,2 @@
 FROM busybox
-COPY ./themes/vanex /mytheme
+COPY ./themes/vanex /vanex
