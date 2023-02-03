@@ -1,0 +1,42 @@
+initContainers: 
+  - name: theme-provider
+    image: localhost:32000/myuser/mytheme:1
+    imagePullPolicy: IfNotPresent
+    command:
+      - sh
+    args:
+      - -c
+      - |
+        echo "Copying theme..."
+        cp -R /mytheme/* /theme
+    volumeMounts:
+      - name: theme
+        mountPath: /theme
+
+
+auth:
+  adminUser: admin
+  adminPassword: admin
+
+postgresql:
+  auth:
+    password: postgres
+    postgresPassword: postgres
+
+extraVolumeMounts: 
+  - name: config
+    mountPath: "/config"
+    readOnly: true
+  - name: theme
+    mountPath: /opt/bitnami/keycloak/themes/mytheme
+
+extraVolumes: 
+  - name: config
+    secret:
+      secretName: realm-secret
+  - name: theme
+    emptyDir: {}
+
+extraEnvVars:
+  - name: KEYCLOAK_EXTRA_ARGS
+    value: "-Dkeycloak.import=/config/realm.json"     

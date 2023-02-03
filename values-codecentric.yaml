@@ -1,0 +1,38 @@
+extraInitContainers: |
+  - name: theme-provider
+    image: localhost:32000/myuser/mytheme:1
+    imagePullPolicy: IfNotPresent
+    command:
+      - sh
+    args:
+      - -c
+      - |
+        echo "Copying theme..."
+        cp -R /mytheme/* /theme
+    volumeMounts:
+      - name: theme
+        mountPath: /theme
+
+
+extraVolumes: |
+  - name: realm-secret
+    secret:
+      secretName: realm-secret
+  - name: theme
+    emptyDir: {}
+
+extraVolumeMounts: |
+  - name: realm-secret
+    mountPath: "/realm/"
+    readOnly: true
+  - name: theme
+    mountPath: /opt/jboss/keycloak/themes/mytheme
+
+
+extraEnv: |
+  - name: KEYCLOAK_IMPORT
+    value: /realm/realm.json
+
+extraEnvFrom: |
+  -  secretRef:
+        name: gitlab-client-secret
