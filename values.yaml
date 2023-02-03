@@ -1,6 +1,6 @@
 initContainers: 
   - name: theme-provider
-    image: localhost:32000/myuser/mytheme:1
+    image: ghcr.io/nerevahr/keycloak-themes:latest
     imagePullPolicy: IfNotPresent
     command:
       - sh
